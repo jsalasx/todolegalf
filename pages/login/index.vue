@@ -67,67 +67,50 @@ const credentials = {
 const apiUrl = "http://localhost:8000";
 
 async function login() {
-  const res = await ApiLogin()
-  if (!res.error) {
+  const baseApiUrl = useRuntimeConfig().public.BaseApiUrl;
+  const respLogin = await useFetch(baseApiUrl + "login/", {
+    method: 'post',
+    body: credentials
+  })
+  if (respLogin.error.value) {
+    if (respLogin.error.value.data.error == true) {
+      const respError = respLogin.error.value.data.errorMsg.join(', ');
+      $toast.error(respError);
+      return false;
+    } else {
+      $toast.error("Error intente mas tarde.");
+      return false;
+    }
+  }
+  if (respLogin.data.value) {
+    const res = respLogin.data.value;
     const accessTokenRequest = {
       username: res.data.username,
       password: credentials.password
     }
-    const tokenData = await getAccessToken(accessTokenRequest)
-    localStorage.setItem('accessToken', tokenData.access);
-    localStorage.setItem('refreshToken', tokenData.refresh);
-    console.log(res);
-    if (res.data) {
-      authStore.setToken('mi-token-secreto');
+    const respToken = await useFetch(baseApiUrl + "api/token/", {
+      method: 'post',
+      body: accessTokenRequest
+    })
+
+    if (respToken.error.value) {
+      $toast.error("Error al obtener el token de autorizacion");
+      return false;
+    }
+
+    if (respToken.data.value) {
+      authStore.setToken(respToken.data.value.access);
       goToHomePage();
     }
-  } else {
-    $toast.error(res.errorMsg.join(', '));
   }
+
+
+ 
 
 }
 
-async function ApiLogin(): Promise<ApiResponseI<UserI>> {
-  const data: LoginI = credentials
-  const dataUser: UserI = {
-    id: 0,
-    username: "",
-    email: ""
-  }
-  let resp: ApiResponseI<UserI> = {
-    error: false,
-    errorMsg: [],
-    data: dataUser
-  }
-  resp = await axios.post<ApiResponseI<UserI>>(apiUrl + "/login/", data)
-    .then(response => {
-      console.log(response.data)
-      return response.data;
-    })
-    .catch(error => {
-      console.error('Error en login:', error.response.data);
-      return error.response.data;
-    });
-  return resp
-}
 async function goToHomePage() {
-  //await navigateTo('/')
+  await navigateTo('/')
 }
 
-async function getAccessToken(accessTokenData: AccessTokenRequestI): Promise<BearerTokenI> {
-  let tokenData: BearerTokenI = {
-    refresh: "",
-    access: ""
-  };
-  tokenData = await axios.post<BearerTokenI>(apiUrl + "/api/token/", accessTokenData)
-    .then(response => {
-      console.log(response.data)
-      return response.data;
-    })
-    .catch(error => {
-      console.error('There was an error fetching the users:', error);
-      return error.response.data;
-    });
-  return tokenData;
-}
 </script>

@@ -3,10 +3,13 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   modules: [
     '@nuxtjs/tailwindcss',
-    '@pinia/nuxt'
+    '@pinia/nuxt',
   ],
-  plugins: [
-    
-  ]
+  runtimeConfig: {
+    public: {
+      BaseApiUrl: process.env.BASEURL
 
+    }
+  }
+  
 })
