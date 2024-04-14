@@ -52,9 +52,6 @@
 
 <script setup lang="ts">
 import { useAuthStore } from '~/stores/auth';
-import type { ApiResponseI } from '../../interface/ApiResponseI';
-import type { AccessTokenRequestI, BearerTokenI, LoginI, UserI } from '../../interface/UserI';
-import axios from 'axios';
 const { $toast } = useNuxtApp();
 
 const authStore = useAuthStore();
@@ -64,8 +61,6 @@ const credentials = {
   email: '',
   password: ''
 }
-const apiUrl = "http://localhost:8000";
-
 async function login() {
   const baseApiUrl = useRuntimeConfig().public.BaseApiUrl;
   const respLogin = await useFetch(baseApiUrl + "login/", {
