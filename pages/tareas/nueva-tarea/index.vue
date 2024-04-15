@@ -1,6 +1,15 @@
 <script setup lang="ts">
 import {ref} from 'vue';
 const { $toast } = useNuxtApp();
+const router = useRouter()
+import { useAuthStore } from '~/stores/auth'
+
+const authStore = useAuthStore()
+const token = authStore.token
+if (token == '') {
+    router.push({ path: "/login" })
+}
+
 const tareaNueva = {
     titulo: '',
     descripcion: '',

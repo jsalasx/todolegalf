@@ -7,6 +7,7 @@ const route = useRoute()
 const currentId = ref(0);
 currentId.value = parseInt(route.params.id.toString());
 const tarea = ref<TareaI>()
+const router = useRouter()
 tarea.value = await getTareaById(currentId.value.toString())
 console.log("tarea")
 console.log(tarea.value)
@@ -46,10 +47,11 @@ async function getTareaById(id: string) {
     const { data, error, pending } = await useFetchApi<TareaI>("tareas/" + id, {
         method: 'GET',
     })
-    //console.log(tareas)
+    console.log("ERROR")
+    console.log(error.value)
     if (error.value) {
         if (error.value.statusCode == 401) {
-            navigateTo('/login')
+            router.push({ path: "/login" })
         }
     }
     if (data) {

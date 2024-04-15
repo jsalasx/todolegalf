@@ -42,8 +42,8 @@
         <p class="mt-10 text-center text-sm text-gray-500">
           No eres miembro ?
           {{ ' ' }}
-          <a href="#" class="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">Registrate
-            aquí</a>
+          <button @click="goToRegistro" class="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">Registrate
+            aquí</button>
         </p>
       </div>
     </div>
@@ -99,14 +99,12 @@ async function login() {
       goToHomePage();
     }
   }
-
-
- 
-
 }
 
 async function goToHomePage() {
   await navigateTo('/')
 }
-
+async function goToRegistro() {
+  await navigateTo('/registrarse')
+}
 </script>
