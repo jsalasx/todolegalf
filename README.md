@@ -1,4 +1,4 @@
-# Nuxt 3 Minimal Starter
+# Tareas Front
 
 ## CI/CD AWS Amplify
 
@@ -6,6 +6,7 @@ Rama Master
 URL 
 ```bash
 https://master.d141tw44z4ikkx.amplifyapp.com/login
+```
 
 ## Setup
 
