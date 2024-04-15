@@ -10,11 +10,12 @@ https://master.d141tw44z4ikkx.amplifyapp.com/login
 
 ## Setup
 
-Make sure to install the dependencies:
+Instalar Dependencias
 
 ```bash
 # npm
 npm install
+```
 
 ## Development Server
 
