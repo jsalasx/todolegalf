@@ -17,9 +17,9 @@ Instalar Dependencias
 npm install
 ```
 
-## Development Server
+## Servidor de Desarrollo
 
-Start the development server on `http://localhost:3000`:
+El servidor de pruebas se levanta en `http://localhost:3000`:
 
 ```bash
 # npm
@@ -27,9 +27,9 @@ npm run dev
 
 ```
 
-## Production
+## Produccion
 
-Build the application for production:
+Contruir app para produccion
 
 ```bash
 # npm
