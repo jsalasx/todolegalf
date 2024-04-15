@@ -8,8 +8,8 @@ export const useFetchApi: useFetchType = (path, options = {}) => {
     const baseApiUrl = useRuntimeConfig().public.BaseApiUrl;
     // console.log("BASE API")
     // console.log(baseApiUrl);
-    const token = authStore.token
-    // console.log("TOKEN->" + token)
+    const token = authStore.token == null ? '': authStore.token
+    console.log("TOKEN->" + token)
     options.baseURL = baseApiUrl
     options.headers = {
         ...options.headers,

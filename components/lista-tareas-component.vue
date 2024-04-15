@@ -1,21 +1,28 @@
 <script setup lang="ts">
-const { $toast } = useNuxtApp();
-import { reactive } from 'vue';
 import Modal from '~/components/Modal.vue'
+const { $toast } = useNuxtApp();
+
 const tareas = ref([]);
 const isModalVisible = ref(false);
 const currentId = ref(0);
+const router = useRouter()
 tareas.value = await getAllTareas();
 
 async function getAllTareas() {
+    console.log("HH")
     const { data, error, pending } = await useFetchApi("tareas/", {
         method: 'GET',
     })
-    //console.log(tareas)
+    console.log(data.value)
+    console.log("ERROR")
+    console.log(error.value)
     if (error.value) {
-        if (error.value.statusCode == 401) {
-            navigateTo('/login')
-        }
+        router.push({ path: "/login" })
+
+        return [];
+        // if (error.value.statusCode == 401) {
+        //     navigateTo('/login')
+        // }
     }
     if (data) {
         return data.value
@@ -45,7 +52,7 @@ async function eliminarTarea() {
         currentId.value = 0
         tareas.value = await getAllTareas()
     } else {
-        $toast.error(respError);
+        //$toast.error(error.value);
     }
 }
 
@@ -57,9 +64,8 @@ function hideModal() {
     isModalVisible.value = false;
 }
 function goToEditarTarea (id) {
-    navigateTo('/tareas/editar-tarea/' + id)
+    router.push({path: '/tareas/editar-tarea/' + id})
 }
-
 
 </script>
 
